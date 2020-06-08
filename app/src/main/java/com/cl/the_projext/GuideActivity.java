@@ -2,12 +2,14 @@ package com.cl.the_projext;
 
 import android.content.Intent;
 import android.graphics.Point;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.cl.base.BaseSplashActivity;
 import com.cl.data.BaseInfo;
+import com.cl.data.LoginInfo;
 import com.cl.data.MainAdEntity;
 import com.cl.data.SpecialtyChooseEntity;
 import com.cl.frame.ApiConfig;
@@ -52,35 +54,61 @@ public class GuideActivity extends BaseSplashActivity {
         }
         Point realSize = SystemUtils.getRealSize(this);
         mPresenter.getData(ApiConfig.ADVERT, specialtyId, realSize.x, realSize.y);
+        new Handler().postDelayed(()->{ if (mInfo == null)jump(); },3000);
+        LoginInfo loginInfo = SharedPrefrenceUtils.getObject(this,ConstantKey.LOGIN_INFO);
+        if (loginInfo != null && !TextUtils.isEmpty(loginInfo.getUid()))mApplication.setLoginInfo(loginInfo);
     }
+
+    final int GUIDE_TYPE = 0;
+    final int NO_GUIDE = 1;
 
     @Override
     public void netSuccess(int whichApi, Object[] pD) {
         mInfo = (BaseInfo<MainAdEntity>) pD[0];
-        GlideUtil.loadImage(advertImage, mInfo.result.getInfo_url());
-        timeView.setVisibility(View.VISIBLE);
-        goTime();
+        if (mInfo != null) {
+            GlideUtil.loadImage(advertImage, mInfo.result.getInfo_url());
+            timeView.setVisibility(View.VISIBLE);
+            goTime(GUIDE_TYPE);
+        } else {
+            goTime(NO_GUIDE);
+        }
+
     }
 
     private int preTime = 5;
 
-    private void goTime() {
-        mSubscribe = Observable.interval(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).subscribe(pLong -> {
-                    if (preTime - pLong > 0) {
-                        timeView.setText(preTime - pLong + "s");
-                        if (preTime - pLong == 1) {
-                            jump();
-                        }
-                    } else {
-                        jump();
-                    }
-                });
+    private void goTime(int type) {
+        switch (type) {
+            case GUIDE_TYPE:
+                mSubscribe = Observable.interval(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe(pLong -> {
+                            if (preTime - pLong > 0) {
+                                timeView.setText(preTime - pLong + "s");
+                                if (preTime - pLong == 1) {
+                                    jump();
+                                }
+                            }
+                        });
+                break;
+            case NO_GUIDE:
+                preTime = 3;
+                mSubscribe = Observable.interval(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread()).subscribe(pLong -> {
+                            if (preTime - pLong > 0) {
+                                timeView.setText(preTime - pLong + "s");
+                                if (preTime - pLong == 1) {
+                                    jump();
+                                }
+                            }
+                        });
+                break;
+        }
+
     }
 
     private void jump() {
-        mSubscribe.dispose();
-        startActivity(new Intent(this, mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id()) ? mApplication.isLogin() ? HomeActivity.class : LoginActivity.class : SubjectActivity.class));
+        if (mSubscribe != null)mSubscribe.dispose();
+        startActivity(new Intent(this,mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id()) ? mApplication.isLogin() ? HomeActivity.class : LoginActivity.class : SubjectActivity.class ));
         finish();
     }
 

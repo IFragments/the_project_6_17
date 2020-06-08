@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/home_main_live_con"
+    android:layout_width="@dimen/dp_150"
+    android:layout_height="@dimen/dp_80"
+    android:layout_margin="@dimen/dp_10"
+    app:cardCornerRadius="@dimen/dp_5">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="@dimen/dp_150"
+        android:layout_height="@dimen/dp_80"
+        android:background="@color/color_gray_light">
+
+        <ImageView
+            android:id="@+id/home_main_child_image"
+            android:layout_width="@dimen/dp_37"
+            android:layout_height="@dimen/dp_37"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginTop="@dimen/dp_10"
+            android:scaleType="centerCrop"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/home_main_live_title"
+            android:layout_width="@dimen/dp_95"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:singleLine="false"
+            android:textColor="@color/app_theme"
+            app:layout_constraintLeft_toRightOf="@id/home_main_child_image"
+            app:layout_constraintTop_toTopOf="@id/home_main_child_image" />
+
+        <TextView
+            android:id="@+id/living"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:text="正在直播"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/home_main_child_image" />
+
+        <LinearLayout
+            android:id="@+id/live_lin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginBottom="@dimen/dp_10"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/home_main_child_image">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_3"
+                android:src="@drawable/ic_lesson_yuyue_gray" />
+
+            <TextView
+                android:id="@+id/live_begin_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

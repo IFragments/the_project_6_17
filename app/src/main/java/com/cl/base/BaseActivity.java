@@ -46,6 +46,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     public void showToast(Object content) {
+        if(content !=null){
+
         Toast.makeText(getApplicationContext(), content.toString(), Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(mApplication, "空", Toast.LENGTH_SHORT).show();
+        }
     }
 }

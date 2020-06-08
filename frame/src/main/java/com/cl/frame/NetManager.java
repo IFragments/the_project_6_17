@@ -45,7 +45,15 @@ public class NetManager {
                 .build()
                 .create(ApiService.class);
     }
-
+    public <T> ApiService getService2(String s) {
+        return new Retrofit.Builder()
+                .baseUrl(s)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(initClient())
+                .build()
+                .create(ApiService.class);
+    }
     private OkHttpClient initClient() {
         return new OkHttpClient().newBuilder()
                 .addInterceptor(new CommonHeadersInterceptor())

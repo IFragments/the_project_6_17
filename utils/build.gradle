@@ -20,6 +20,9 @@ dependencies {
 
 //加载图片
     implementation 'com.github.bumptech.glide:glide:4.8.0'
+
+//event
+    api "org.greenrobot:eventbus:$eventbus"
     implementation project(path: ':data')
 //加载图片
 }

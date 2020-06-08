@@ -24,6 +24,7 @@
     <color name="color_black">#000</color>
     <color name="color_green">#00ff00</color>
     <color name="color_pink">#FF4081</color>
+    <color name="color_gray_light">#ECECEC</color>
 
     <color name="color_gray_line">#F3F3F3</color>
     <color name="color_black_text">#333333</color>

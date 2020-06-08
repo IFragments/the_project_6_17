@@ -57,4 +57,7 @@ ext {
     naviVersionKtl = '1.0.0'
     tablayout = '2.0.8@aar'
     abiFilters = ['armeabi-v7a']//'arm64-v8a', 'armeabi', 'x86', 'arm64-v8a'
+    eventbus = '3.1.1'
+    banner = '1.4.10'
+    gson = '2.8.1'
 }

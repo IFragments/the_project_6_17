@@ -14,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cl.data.SpecialtyChooseEntity;
 import com.cl.frame.FrameApplication;
 import com.cl.the_projext.R;
+import com.yiyatech.utils.event.NoFinishSubjectEvent;
+import com.yiyatech.utils.event.TransferIDEvent;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -22,7 +26,7 @@ public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapte
     private Context mContext;
     private SubjectAdapter fatherAdapter;
 
-    public SubjectChildAdapter(List<SpecialtyChooseEntity.DataBean> pData, Context pContext,SubjectAdapter fatherAdapter) {
+    public SubjectChildAdapter(List<SpecialtyChooseEntity.DataBean> pData, Context pContext, SubjectAdapter fatherAdapter) {
         data = pData;
         mContext = pContext;
         this.fatherAdapter = fatherAdapter;
@@ -46,8 +50,15 @@ public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapte
         }
         holder.label.setOnClickListener(v -> {
             FrameApplication.getFrameApplication().setSelectedInfo(data.get(position));
+            String specialty_id = data.get(position).getSpecialty_id();
+            int spId = Integer.parseInt(specialty_id);
+            int pro = data.get(position).getFid();
+            String name = data.get(position).getSpecialty_name();
+            EventBus.getDefault().postSticky(new TransferIDEvent(pro, spId,name));
+//            EventBus.getDefault().postSticky(new NoFinishSubjectEvent(pro,spId));
             fatherAdapter.notifyDataSetChanged();
         });
+
     }
 
     @Override
@@ -55,8 +66,19 @@ public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapte
         return data != null ? data.size() : 0;
     }
 
+    public interface CallbackProAndId {
+        void getProAndId(int pro, int spId);
+    }
+
+    CallbackProAndId callbackProAndId;
+
+    public void setCallbackProAndId(CallbackProAndId callbackProAndId) {
+        this.callbackProAndId = callbackProAndId;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
         TextView label;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             label = itemView.findViewById(R.id.subject_label);

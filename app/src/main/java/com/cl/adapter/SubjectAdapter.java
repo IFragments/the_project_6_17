@@ -43,13 +43,15 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.ViewHold
         GlideUtil.loadImage(holder.leftRoundImage,entity.getIcon());
         holder.itemTitle.setText(entity.getBigspecialty());
         holder.itemRecyclerview.setLayoutManager(new GridLayoutManager(mContext,4));
-        holder.itemRecyclerview.setAdapter(new SubjectChildAdapter(entity.getData(),mContext,this));
+        SubjectChildAdapter subjectChildAdapter = new SubjectChildAdapter(entity.getData(), mContext, this);
+        holder.itemRecyclerview.setAdapter(subjectChildAdapter);
     }
 
     @Override
     public int getItemCount() {
         return mList != null ? mList.size() : 0;
     }
+
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.left_round_image)
