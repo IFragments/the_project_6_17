@@ -42,6 +42,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".RegisterActivity"></activity>
         <activity
             android:name=".GuideActivity"
             android:theme="@style/Guide_activity_theme">
@@ -53,12 +54,11 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Main_activity_theme">
-
-        </activity>
-        <activity android:name=".SubjectActivity"/>
-        <activity android:name=".HomeActivity"/>
-        <activity android:name=".LoginActivity"/>
+            android:theme="@style/Main_activity_theme" />
+        <activity android:name=".SubjectActivity" />
+        <activity android:name=".HomeActivity" />
+        <activity android:name=".LoginActivity" />
+        <activity android:name=".RegisterPhoneActivity" />
     </application>
 
 </manifest>

@@ -12,17 +12,12 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
 import com.cl.base.BaseMvpFragment;
+import com.cl.constants.JumpConstant;
 import com.cl.design.BottomTabView;
 import com.cl.frame.FrameApplication;
 import com.cl.model.MainPageModel;
 import com.cl.the_projext.R;
 import com.cl.the_projext.SubjectActivity;
-import com.yiyatech.utils.event.TransferIDEvent;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -60,16 +55,16 @@ public class HomeFragment extends BaseMvpFragment implements BottomTabView.OnBot
         tabView.setResource(normalIcon, selectedIcon, tabContent);
         tabView.setOnBottomTabClickCallBack(this);
         mTextView.setOnClickListener(this);
-        EventBus.getDefault().register(this);
+//        EventBus.getDefault().register(this);
     }
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void setEventData(TransferIDEvent transferIDEvent) {
-        String name = transferIDEvent.getName();
-        mTextView.setText(name);
-        int pro = transferIDEvent.getPro();
-        int spId = transferIDEvent.getSpId();
-    }
+//    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+//    public void setEventData(TransferIDEvent transferIDEvent) {
+//        String name = transferIDEvent.getName();
+//        mTextView.setText(name);
+//        int pro = transferIDEvent.getPro();
+//        int spId = transferIDEvent.getSpId();
+//    }
 
     @Override
     public void setUpData() {
@@ -83,12 +78,18 @@ public class HomeFragment extends BaseMvpFragment implements BottomTabView.OnBot
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        mTextView.setText(FrameApplication.getFrameApplication().getSelectedInfo().getSpecialty_name());
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         normalIcon.clear();
         selectedIcon.clear();
         tabContent.clear();
-        EventBus.getDefault().unregister(this);
+//        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -122,8 +123,7 @@ public class HomeFragment extends BaseMvpFragment implements BottomTabView.OnBot
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.select_subject:
-                Intent intent = new Intent(getActivity(), SubjectActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(getContext(), SubjectActivity.class).putExtra(JumpConstant.JUMP_KEY, JumpConstant.HOME_TO_SUB));
                 break;
         }
     }

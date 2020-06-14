@@ -60,4 +60,6 @@ ext {
     eventbus = '3.1.1'
     banner = '1.4.10'
     gson = '2.8.1'
+    tablayout = '2.0.8@aar'
+    material = '1.0.0'
 }

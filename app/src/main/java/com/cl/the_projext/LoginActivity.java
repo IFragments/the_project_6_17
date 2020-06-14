@@ -1,11 +1,14 @@
 package com.cl.the_projext;
 
 import android.content.Intent;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cl.base.BaseMvpActivity;
+import com.cl.constants.JumpConstant;
 import com.cl.data.BaseInfo;
 import com.cl.data.LoginInfo;
 import com.cl.data.PersonHeader;
@@ -24,12 +27,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import static com.cl.constants.JumpConstant.SPLASH_TO_LOGIN;
+import static com.cl.constants.JumpConstant.SUB_TO_LOGIN;
+
 public class LoginActivity extends BaseMvpActivity<AccountModel> implements LoginView.LoginViewCallBack {
 
     @BindView(R.id.login_view)
     LoginView mLoginView;
     private Disposable mSubscribe;
     private String phoneNum;
+    private String mFromType;
 
     @Override
     public AccountModel setModel() {
@@ -43,6 +50,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
 
     @Override
     public void setUpView() {
+        mFromType = getIntent().getStringExtra(JumpConstant.JUMP_KEY);
         mLoginView.setLoginViewCallBack(this);
     }
 
@@ -56,13 +64,18 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
         switch (whichApi) {
             case ApiConfig.SEND_VERIFY:
                 BaseInfo<String> info = (BaseInfo<String>) pD[0];
-                showToast(info.result);
-                goTime();
+                if (info.isSuccess()) {
+                    showToast(info.result);
+                    goTime();
+                } else {
+                    showToast("发送太频繁啦,等一下啦");
+                }
                 break;
+            case ApiConfig.ACCOUNT_LOGIN:
             case ApiConfig.VERIFY_LOGIN:
                 BaseInfo<LoginInfo> baseInfo = (BaseInfo<LoginInfo>) pD[0];
                 LoginInfo loginInfo = baseInfo.result;
-                loginInfo.login_name = phoneNum;
+                if (!TextUtils.isEmpty(phoneNum)) loginInfo.login_name = phoneNum;
                 mApplication.setLoginInfo(loginInfo);
                 mPresenter.getData(ApiConfig.GET_HEADER_INFO);
                 break;
@@ -76,11 +89,12 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     }
 
     private void jump() {
-        startActivity(new Intent(this,HomeActivity.class));
-        this.finish();
+        if (!TextUtils.isEmpty(mFromType) && mFromType.equals(SPLASH_TO_LOGIN) || mFromType.equals(SUB_TO_LOGIN))
+            startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 
-    private long time = 60l;
+    private long time = 59l;
 
     private void goTime() {
         mSubscribe = Observable.interval(1, TimeUnit.SECONDS).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(goTime -> {
@@ -98,11 +112,16 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.close_login:
+                if (!TextUtils.isEmpty(mFromType) && (mFromType.equals(SUB_TO_LOGIN) || mFromType.equals(SPLASH_TO_LOGIN))) {
+                    startActivity(new Intent(this, HomeActivity.class));
+                }
                 finish();
                 break;
             case R.id.register_press:
+                startActivity(new Intent(this, RegisterActivity.class));
                 break;
             case R.id.forgot_pwd:
+
                 break;
             case R.id.login_by_qq:
                 break;
@@ -122,6 +141,7 @@ public class LoginActivity extends BaseMvpActivity<AccountModel> implements Logi
         doPre();
         if (mLoginView.mCurrentLoginType == mLoginView.VERIFY_TYPE)
             mPresenter.getData(ApiConfig.VERIFY_LOGIN, userName, pwd);
+        else mPresenter.getData(ApiConfig.ACCOUNT_LOGIN, userName, pwd);
     }
 
     @Override

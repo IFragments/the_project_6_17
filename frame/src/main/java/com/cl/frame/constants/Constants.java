@@ -9,7 +9,7 @@ import com.cl.frame.R;
 public class Constants {
 
     public static String RSA_PUBLIC;
-
+    public static final int LIMIT_NUM = 10;
     static {
         RSA_PUBLIC = FrameApplication.getFrameApplicationContext().getString(R.string.rsa_public);
     }

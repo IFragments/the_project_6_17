@@ -1,5 +1,6 @@
 package com.cl.the_projext;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.cl.adapter.SubjectAdapter;
 import com.cl.adapter.SubjectChildAdapter;
 import com.cl.base.BaseMvpActivity;
+import com.cl.constants.JumpConstant;
 import com.cl.data.BaseInfo;
 import com.cl.data.SpecialtyChooseEntity;
 import com.cl.frame.ApiConfig;
@@ -33,9 +35,11 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> implements Subj
     TextView titleContent;
     @BindView(R.id.recyclerView)
     RecyclerView recyclerView;
-    //    @BindView(R.id.right_image)
-//    ImageView rightImage;
+    @BindView(R.id.more_content)
+    TextView moreContent;
+
     private SubjectAdapter mAdapter;
+    private String mFrom;
 
     @Override
     public LauchModel setModel() {
@@ -49,10 +53,28 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> implements Subj
 
     @Override
     public void setUpView() {
+        mFrom = getIntent().getStringExtra(JumpConstant.JUMP_KEY);
         titleContent.setText(getString(R.string.select_subject));
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new SubjectAdapter(mListData, this);
         recyclerView.setAdapter(mAdapter);
+        moreContent.setText("完成");
+        moreContent.setOnClickListener(v->{
+            if (mApplication.getSelectedInfo() == null){
+                showToast("请选择专业");
+                return;
+            }
+            if (mFrom.equals(JumpConstant.SPLASH_TO_SUB)){
+                if (mApplication.isLogin()){
+                    startActivity(new Intent(SubjectActivity.this,HomeActivity.class));
+                } else {
+                    startActivity(
+                            new Intent(SubjectActivity.this,
+                                    LoginActivity.class).putExtra(JumpConstant.JUMP_KEY,JumpConstant.SUB_TO_LOGIN));
+                }
+            }
+            finish();
+        });
 //        EventBus.getDefault().register(this);
     }
 
@@ -93,7 +115,7 @@ public class SubjectActivity extends BaseMvpActivity<LauchModel> implements Subj
         SharedPrefrenceUtils.putObject(this, ConstantKey.SUBJECT_SELECT, mApplication.getSelectedInfo());
     }
 
-//    @OnClick({R.id.back_image, R.id.right_image})
+    //    @OnClick({R.id.back_image, R.id.right_image})
     @OnClick(R.id.back_image)
     public void onViewClicked(View view) {
         switch (view.getId()) {

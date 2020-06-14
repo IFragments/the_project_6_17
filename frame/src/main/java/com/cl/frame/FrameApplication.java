@@ -14,7 +14,7 @@ public class FrameApplication extends UtilsApplication {
     private Device mDeviceInfo;
     private LoginInfo mLoginInfo;
     private String cookie;
-    private  SpecialtyChooseEntity.DataBean selectedInfo;
+    private    SpecialtyChooseEntity.DataBean selectedInfo;
 
     public SpecialtyChooseEntity.DataBean getSelectedInfo() {
         return selectedInfo;

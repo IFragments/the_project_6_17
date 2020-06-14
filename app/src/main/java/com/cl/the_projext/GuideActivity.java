@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.cl.base.BaseSplashActivity;
+import com.cl.constants.JumpConstant;
 import com.cl.data.BaseInfo;
 import com.cl.data.LoginInfo;
 import com.cl.data.MainAdEntity;
@@ -108,8 +109,18 @@ public class GuideActivity extends BaseSplashActivity {
 
     private void jump() {
         if (mSubscribe != null)mSubscribe.dispose();
-        startActivity(new Intent(this,mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id()) ? mApplication.isLogin() ? HomeActivity.class : LoginActivity.class : SubjectActivity.class ));
-        finish();
+        Observable.just("我是防抖动").debounce(20, TimeUnit.MILLISECONDS).subscribe(p->{
+            if (mSelectedInfo != null && !TextUtils.isEmpty(mSelectedInfo.getSpecialty_id())) {
+                if (mApplication.isLogin()) {
+                    startActivity(new Intent(GuideActivity.this, HomeActivity.class));
+                } else {
+                    startActivity(new Intent(GuideActivity.this, LoginActivity.class).putExtra(JumpConstant.JUMP_KEY, JumpConstant.SPLASH_TO_LOGIN));
+                }
+            } else {
+                startActivity(new Intent(GuideActivity.this, SubjectActivity.class).putExtra(JumpConstant.JUMP_KEY, JumpConstant.SPLASH_TO_SUB));
+            }
+            finish();
+        });
     }
 
     @Override

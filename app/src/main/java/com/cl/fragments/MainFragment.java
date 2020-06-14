@@ -1,8 +1,10 @@
 package com.cl.fragments;
 
+import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cl.adapter.HomeMainAdapter;
@@ -43,6 +45,21 @@ public class MainFragment extends BaseMvpFragment<ICommonModule> implements Data
     private ParamHashMap add;
     private int fid;
     private int spId;
+    int isStart = 0;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        isStart = 1;
+    }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (isStart == 1) {
+//            setUpData();
+//        }
+//    }
 
     @Override
     public ICommonModule setModel() {

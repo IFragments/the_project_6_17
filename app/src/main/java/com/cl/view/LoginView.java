@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
@@ -70,7 +71,7 @@ public class LoginView extends RelativeLayout {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.LoginView, 0, 0);
         mIsMoreType = ta.getBoolean(R.styleable.LoginView_isMoreType, true);
         initView();
-        if (!mIsMoreType){
+        if (!mIsMoreType) {
             verifyPoint.setVisibility(GONE);
             accountPoint.setVisibility(GONE);
             verifyLogin.setVisibility(GONE);
@@ -105,7 +106,7 @@ public class LoginView extends RelativeLayout {
         });
     }
 
-    @OnClick({R.id.account_login, R.id.verify_login, R.id.get_verify_code, R.id.login_press,R.id.delete_account_name,R.id.is_visible})
+    @OnClick({R.id.account_login, R.id.verify_login, R.id.get_verify_code, R.id.login_press, R.id.delete_account_name, R.id.is_visible})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.is_visible:
@@ -116,7 +117,7 @@ public class LoginView extends RelativeLayout {
                 accountName.setText("");
                 break;
             case R.id.account_login:
-                if (mCurrentLoginType != ACCOUNT_TYPE){
+                if (mCurrentLoginType != ACCOUNT_TYPE) {
                     accountLogin.setTextColor(ContextCompat.getColor(mContext, R.color.red));
                     accountPoint.setVisibility(VISIBLE);
                     verifyLogin.setTextColor(ContextCompat.getColor(mContext, R.color.dark_gray));
@@ -127,14 +128,14 @@ public class LoginView extends RelativeLayout {
                 }
                 break;
             case R.id.verify_login:
-                if (mCurrentLoginType != VERIFY_TYPE){
+                if (mCurrentLoginType != VERIFY_TYPE) {
                     accountLogin.setTextColor(ContextCompat.getColor(mContext, R.color.dark_gray));
                     accountPoint.setVisibility(INVISIBLE);
                     verifyLogin.setTextColor(ContextCompat.getColor(mContext, R.color.red));
                     verifyPoint.setVisibility(VISIBLE);
                     accountModule.setVisibility(INVISIBLE);
                     verifyView.setVisibility(VISIBLE);
-                    verifyPoint.setBackgroundColor(ContextCompat.getColor(mContext,R.color.red));
+                    verifyPoint.setBackgroundColor(ContextCompat.getColor(mContext, R.color.red));
                     mCurrentLoginType = VERIFY_TYPE;
                 }
                 break;
@@ -148,18 +149,20 @@ public class LoginView extends RelativeLayout {
                     return;
                 }
                 if (mLoginViewCallBack != null)
-                    mLoginViewCallBack.sendVerifyCode(areaCode.getText().toString()+verifyName.getText().toString().trim());
+                    mLoginViewCallBack.sendVerifyCode(areaCode.getText().toString() + verifyName.getText().toString().trim());
                 break;
             case R.id.login_press:
-                String userName = "",passWord = "";
-                if (mCurrentLoginType == ACCOUNT_TYPE){
+                String userName = "", passWord = "";
+                if (mCurrentLoginType == ACCOUNT_TYPE) {
                     userName = accountName.getText().toString().trim();
                     passWord = accountSecrete.getText().toString().trim();
                 } else {
                     userName = verifyName.getText().toString().trim();
                     passWord = verifyCode.getText().toString().trim();
                 }
-                if (mLoginViewCallBack != null) mLoginViewCallBack.loginPress(mCurrentLoginType,userName,passWord);
+                Toast.makeText(mContext, "你点了登录", Toast.LENGTH_SHORT).show();
+                if (mLoginViewCallBack != null)
+                    mLoginViewCallBack.loginPress(mCurrentLoginType, userName, passWord);
                 break;
 
         }

@@ -54,7 +54,7 @@ public class SubjectChildAdapter extends RecyclerView.Adapter<SubjectChildAdapte
             int spId = Integer.parseInt(specialty_id);
             int pro = data.get(position).getFid();
             String name = data.get(position).getSpecialty_name();
-            EventBus.getDefault().postSticky(new TransferIDEvent(pro, spId,name));
+//            EventBus.getDefault().postSticky(new TransferIDEvent(pro, spId,name));
 //            EventBus.getDefault().postSticky(new NoFinishSubjectEvent(pro,spId));
             fatherAdapter.notifyDataSetChanged();
         });

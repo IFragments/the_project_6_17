@@ -26,22 +26,22 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/right_image"-->
-<!--        android:layout_width="@dimen/dp_50"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent" />-->
+    <ImageView
+        android:id="@+id/right_image"
+        android:layout_width="@dimen/dp_50"
+        android:layout_height="match_parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
-<!--    <TextView-->
-<!--        android:id="@+id/more_content"-->
-<!--        android:layout_width="31dp"-->
-<!--        android:layout_height="29dp"-->
-<!--        android:layout_marginRight="@dimen/dp_15"-->
-<!--        android:text="完成"-->
-<!--        android:textColor="@color/white"-->
-<!--        android:textSize="@dimen/sp_13"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintRight_toRightOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <TextView
+        android:id="@+id/more_content"
+        android:layout_width="31dp"
+        android:layout_height="29dp"
+        android:layout_marginRight="@dimen/dp_15"
+        android:text="完成"
+        android:textColor="@color/white"
+        android:textSize="@dimen/sp_13"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

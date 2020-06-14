@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dp_150"
+    android:layout_marginLeft="@dimen/dp_10"
+    android:layout_marginRight="@dimen/dp_10"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <ImageView
+        android:id="@+id/vip_list_image"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_80"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_marginRight="@dimen/dp_10"
+        android:scaleType="centerCrop" />
+
+    <TextView
+        android:id="@+id/vip_list_title"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vip_list_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_5"
+        android:textColor="@color/app_theme" />
+
+    <ImageView
+        android:id="@+id/peopleNum"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vip_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_10"
+        android:src="@drawable/ic_lesson_desc_s5" />
+
+    <TextView
+        android:id="@+id/peopleStudy"
+        app:layout_constraintLeft_toRightOf="@id/peopleNum"
+        app:layout_constraintTop_toBottomOf="@id/vip_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_10" />
+
+    <ImageView
+        android:id="@+id/vip_like"
+        app:layout_constraintRight_toLeftOf="@id/vip_like_num"
+        app:layout_constraintTop_toBottomOf="@id/vip_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_13"
+        android:layout_marginRight="@dimen/dp_3"
+        android:src="@drawable/ic_like" />
+
+    <TextView
+        android:id="@+id/vip_like_num"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/vip_list_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dp_2"
+        android:layout_marginTop="@dimen/dp_10" />
+</androidx.constraintlayout.widget.ConstraintLayout>

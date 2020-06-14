@@ -140,12 +140,11 @@ public class HomeMainAdapter extends RecyclerView.Adapter {
                 ListOneHolder listOneHolder = (ListOneHolder) holder;
 //                HomeListBean.ResultBean resultBean = (HomeListBean.ResultBean) listData;
                 if (bannerData.size() != 0 && liveData.size() != 0) {
-                    position -= 2;
+                    position -= 3;
                 }
                 if ((bannerData.size() == 0 && liveData.size() != 0) || (bannerData.size() != 0 && liveData.size() == 0)) {
-                    position -= 1;
+                    position -= 2;
                 }
-
                 HomeListBean.ResultBean resultBean = listData.get(position);
                 listOneHolder.time.setText(resultBean.getDate());
                 ImageView imageView = listOneHolder.imageView;

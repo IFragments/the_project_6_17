@@ -3,29 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:startDestination="@id/mainPageFragment">
 
-    <fragment
+    <tab_fragment
         android:id="@+id/mainPageFragment"
         android:name="com.cl.fragments.MainFragment"
-        android:label="MainPageFragment">
+        android:label="mainPageFragment">
       <!--  <action
             android:id="@+id/toAdvert"
             app:destination="@id/advertFragment" />-->
-    </fragment>
-    <fragment
+    </tab_fragment>
+    <tab_fragment
         android:id="@+id/courseFragment"
         android:name="com.cl.fragments.CurriculumFragment"
-        android:label="CourseFragment"/>
-    <fragment
+        android:label="courseFragment"/>
+    <tab_fragment
         android:id="@+id/vipFragment"
         android:name="com.cl.fragments.VIPFragment"
-        android:label="VIPFragment"/>
-    <fragment
+        android:label="vipFragment"/>
+    <tab_fragment
         android:id="@+id/dataFragment"
         android:name="com.cl.fragments.MaterialFragment"
-        android:label="DataFragment"/>
-    <fragment
+        android:label="dataFragment"/>
+    <tab_fragment
         android:id="@+id/mineFragment"
         android:name="com.cl.fragments.MyCenterFragment"
-        android:label="MineFragment"/>
+        android:label="mineFragment"/>
 
 </navigation>
